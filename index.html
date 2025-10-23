@@ -1,56 +1,182 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Worm AI Frame</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;700&display=swap');
 
+:root {
+      --dark-red: #8B0000;
+      --light-red: #FF4136;
+      --bg-color: #121212;
+    }
+
     body {
       font-family: 'Vazirmatn', sans-serif;
+      background-color: var(--bg-color);
       margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+      box-sizing: border-box;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* Animation for the background sheen effect */
+    /* --- پس‌زمینه با نورپردازی نرم و تصادفی --- */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+
+      /* گرادیانت نور کمی نرم‌تر شده */
+      background: linear-gradient(
+      135deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.07) 48%,
+      rgba(255, 255, 255, 0.14) 50%,
+      rgba(255, 255, 255, 0.07) 52%,
+      transparent 60%
+      );
+      background-size: 250% 250%;
+      /* انیمیشن جدید، نرم و با مسیر تصادفی */
+      animation: random-sheen 18s ease-in-out infinite;
+
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='0' y='35' font-size='10' font-weight='700' fill='white' transform='rotate(-45 50 50)'%3ESHΞN™%3C/text%3E%3Ctext x='50' y='85' font-size='10' font-weight='700' fill='white' transform='rotate(-45 50 50)'%3ESHΞN™%3C/text%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='0' y='35' font-size='10' font-weight='700' fill='white' transform='rotate(-45 50 50)'%3ESHΞN™%3C/text%3E%3Ctext x='50' y='85' font-size='10' font-weight='700' fill='white' transform='rotate(-45 50 50)'%3ESHΞN™%3C/text%3E%3C/svg%3E");
+    }
+
+    /* انیمیشن جدید با مسیر چند مرحله‌ای برای حس تصادفی بودن */
     @keyframes random-sheen {
-      0%   { background-position: 150% 150%; }
-      25%  { background-position: -50% 100%; }
-      50%  { background-position: 150% -50%; }
-      75%  { background-position: 50% 160%; }
-      100% { background-position: 150% 150%; }
+      0% {
+        background-position: 150% 150%;
+      }
+      25% {
+        background-position: -50% 100%;
+      }
+      50% {
+        background-position: 150% -50%;
+      }
+      75% {
+        background-position: 50% 160%;
+      }
+      100% {
+        background-position: 150% 150%;
+      }
     }
 
-    /* Animation for the footer link's gradient wave */
+    /* --- قاب اصلی (بدون نورپردازی اختصاصی) --- */
+    .gradient-frame {
+      position: relative;
+      width: 90%;
+      max-width: 1200px;
+      height: 80vh;
+      border-radius: 20px;
+      z-index: 10;
+
+      padding: 10px;
+      background: linear-gradient(135deg, var(--dark-red), var(--light-red));
+
+      box-shadow:
+      inset 3px 3px 8px rgba(0, 0, 0, 0.6),
+      inset -3px -3px 8px rgba(255, 255, 255, 0.15),
+      0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /*
+         * کدهای مربوط به .gradient-frame::before و .gradient-frame::after
+         * (هاله نور قرمز پشت قاب) به طور کامل حذف شده‌اند.
+         */
+
+    .inner-bg {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      bottom: 10px;
+      left: 10px;
+      background-color: var(--bg-color);
+      border-radius: 12px;
+      z-index: 0;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .embedded-site {
+      flex-grow: 1;
+      width: 100%;
+      border: none;
+      display: block;
+    }
+
+    .frame-footer {
+      background-color: transparent;
+      padding: 0.85rem 0;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .footer-link {
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-decoration: none;
+      background: linear-gradient(270deg, var(--dark-red), var(--light-red));
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: wave 5s ease-in-out infinite;
+      display: inline-block;
+    }
+
     @keyframes wave {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Helper classes to apply the animations */
-    .animate-random-sheen {
-        animation: random-sheen 18s ease-in-out infinite;
-    }
-
-    .animate-wave {
-        animation: wave 5s ease-in-out infinite;
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
   </style>
 <script type="importmap">
 {
   "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+    "react": "https://aistudiocdn.com/react@^19.2.0"
   }
 }
 </script>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+  <div class="gradient-frame">
+    <div class="inner-bg"></div>
+    <div class="content-wrapper">
+      <iframe class="embedded-site" src="https://wormai.vercel.app" title="Worm AI" allow="clipboard-write"></iframe>
+      <footer class="frame-footer">
+        <a href="https://t.me/shervini" class="footer-link" target="_blank" rel="noopener noreferrer">Exclusive SHΞN™ made</a>
+      </footer>
+    </div>
+  </div>
 </body>
 </html>
