@@ -119,7 +119,6 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transition: transform 0.2s ease-out; /* Added for smooth tilting */
     }
 
     .embedded-site {
@@ -173,38 +172,11 @@
         background-position: 0% 50%;
       }
     }
-
-    #permission-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 20;
-      padding: 1rem 2rem;
-      font-family: 'Vazirmatn', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      color: white;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid var(--light-red);
-      border-radius: 10px;
-      cursor: pointer;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      display: none; /* Initially hidden */
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    #permission-button:hover {
-      background: var(--light-red);
-      color: var(--bg-color);
-    }
   </style>
 </head>
 <body>
   <div class="gradient-frame">
     <div class="inner-bg"></div>
-    <button id="permission-button">فعال‌سازی کنترل حرکتی</button>
     <div class="content-wrapper">
       <iframe class="embedded-site" src="https://wormai.vercel.app" title="Worm AI" allow="clipboard-write"></iframe>
       <footer class="frame-footer">
