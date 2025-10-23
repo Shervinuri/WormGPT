@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Worm AI Frame</title>
+  <title>نسخه نهایی و اصلاح شده</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;700&display=swap');
 
@@ -13,9 +13,12 @@
       --bg-color: #121212;
     }
 
+    html {
+      background-color: var(--bg-color);
+    }
+
     body {
       font-family: 'Vazirmatn', sans-serif;
-      background-color: var(--bg-color);
       margin: 0;
       display: flex;
       justify-content: center;
@@ -35,7 +38,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -2;
+      z-index: -1; /* Placed behind the frame content, but in front of html background */
 
       /* گرادیانت نور کمی نرم‌تر شده */
       background: linear-gradient(
@@ -127,10 +130,23 @@
     }
 
     .frame-footer {
-      background-color: transparent;
-      padding: 0.85rem 0;
+      background-color: var(--bg-color); /* Changed from transparent */
+      padding: 1.2rem 0; /* Adjusted padding */
       text-align: center;
       flex-shrink: 0;
+      position: relative; /* Needed for the pseudo-element */
+    }
+
+    /* New pseudo-element for the fade effect */
+    .frame-footer::before {
+      content: '';
+      position: absolute;
+      top: -40px; /* Height of the fade */
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--bg-color));
+      pointer-events: none;
     }
 
     .footer-link {
@@ -158,15 +174,6 @@
       }
     }
   </style>
-<script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0"
-  }
-}
-</script>
 </head>
 <body>
   <div class="gradient-frame">
@@ -174,7 +181,7 @@
     <div class="content-wrapper">
       <iframe class="embedded-site" src="https://wormai.vercel.app" title="Worm AI" allow="clipboard-write"></iframe>
       <footer class="frame-footer">
-        <a href="https://t.me/shervini" class="footer-link" target="_blank" rel="noopener noreferrer">Exclusive SHΞN™ made</a>
+        <a href="https://t.me/shervini" class="footer-link" target="_blank">Exclusive SHΞN™ made</a>
       </footer>
     </div>
   </div>
